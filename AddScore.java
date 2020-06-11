@@ -3,16 +3,6 @@ import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author Nicholas
- */
 public class AddScore extends javax.swing.JFrame {
 
     /**
@@ -25,23 +15,26 @@ public class AddScore extends javax.swing.JFrame {
     DefaultTableModel model;
     public AddScore() {
         initComponents();
-        c.fillCourseComboBox(jComboBoxcourseid);
-        std.updateStudentTable(tablescore, "");
+        c.fillCourseComboBox(jComboBoxcourseid); // fill the course combobox with data from the database using a function from Course class
+        std.updateStudentTable(tablescore, ""); // update the table on the window
         
-        hideColumn(6);
-        hideColumn(5);
+        hideColumn(6); // this table is actually copy pasted from an another class 
+        hideColumn(5); // so i just hid the unnecessary columns using a function i made below
         hideColumn(4);
         hideColumn(3);
         
-        model = (DefaultTableModel)tablescore.getModel();
-        tablescore.setRowHeight(30);
+        model = (DefaultTableModel)tablescore.getModel(); // get model table 
+        tablescore.setRowHeight(30); // twinkle with table appearance
         tablescore.setShowGrid(true);
         tablescore.setGridColor(Color.ORANGE);
         tablescore.setSelectionBackground(Color.BLACK);
     }
     
     private void hideColumn(int columnIndex){
-        TableColumn col = tablescore.getColumnModel().getColumn(columnIndex);
+        //function to hide columns on a table
+        TableColumn col = tablescore.getColumnModel().getColumn(columnIndex); // store a column from the score table in a variable
+        // with the parameter of the function being the index of the column
+        // then set the max/min/preferred width to 0 for it to be invisible
         col.setMaxWidth(0);
         col.setMinWidth(0);
         col.setPreferredWidth(0);
@@ -78,7 +71,7 @@ public class AddScore extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Course Id :");
+        jLabel2.setText("Course  :");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -248,16 +241,22 @@ public class AddScore extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
-        
+        // stores what the user typed or inputted in the form to variables
         int stdId = Integer.valueOf(txtstudentid.getText());
         int crsId = c.getCourseId(jComboBoxcourseid.getSelectedItem().toString());
         double scr = Double.valueOf(txtscore.getText());
+        
+        // using the a function from the Score class, we inserted a score belonging to a certain student with a certain course with description 
         sc.insertUpdateDeleteScore('i', stdId, crsId, scr, txtdesc.getText());
         
         try{
+            // this is to update the table from the EditDeleteScore window whenever we add a score in the AddScore form
+            // because i made the AddScore form being accessible in the EditDeleteScore form so i have to update the editscore table 
+            // whenever we add scores from the EditDeleteScore window using the function from Score class
             EditDeleteScore.tablescoreedit.setModel(new DefaultTableModel(null, new Object []{"Student Id", "Course Id", "Score", "Description"}));
             sc.updateScoreTable(EditDeleteScore.tablescoreedit);
         } catch(Exception ex){
+            // if the addscore form is not opened from the edit/delete score form
             System.out.println(ex.getMessage());
         }
         
@@ -265,54 +264,19 @@ public class AddScore extends javax.swing.JFrame {
 
     private void btncancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelActionPerformed
         this.dispose();
-//        if(!txtstudentid.getText().equals("")){
-//            int id = Integer.valueOf(txtstudentid.getText());
-//            c.insertUpdateDeleteCourse('d', id, null, null);
-//
-//            ManageCourse.tablecourse.setModel(new DefaultTableModel(null, new Object[]{"Id", "Label", "Hours"}));
-//            c.updateCourseTable(ManageCourse.tablecourse);
-//
-//            txtstudentid.setText("");
-//            txtcourseid.setText("");
-//            spinnerhours.setValue(24);
-//        }
 
     }//GEN-LAST:event_btncancelActionPerformed
 
     private void tablescoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablescoreMouseClicked
-
+        // if i click on a row on the table
+        // the student id textfield will fill itself with the data selected from the row
         int rowIndex = tablescore.getSelectedRow();
         txtstudentid.setText(tablescore.getValueAt(rowIndex, 0).toString());
         
     }//GEN-LAST:event_tablescoreMouseClicked
-
+    
     private void tablescoreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablescoreKeyReleased
 
-//        if(evt.getKeyCode() == KeyEvent.VK_UP || evt.getKeyCode() == KeyEvent.VK_DOWN){
-//
-//            rowIndex = tablescore.getSelectedRow();
-//            txtstdid.setText(model.getValueAt(rowIndex, 0).toString());
-//            txtfirstname.setText(model.getValueAt(rowIndex, 1).toString());
-//            txtlastname.setText(model.getValueAt(rowIndex, 2).toString());
-//            txtphone.setText(model.getValueAt(rowIndex, 5).toString());
-//            txtareaaddress.setText(model.getValueAt(rowIndex, 6).toString());
-//
-//            if(model.getValueAt(rowIndex, 3).toString().equals("Male")){
-//                jRadioButtonmale.setSelected(true);
-//                jRadioButtonfemale.setSelected(false);
-//            }
-//            else{
-//                jRadioButtonfemale.setSelected(true);
-//                jRadioButtonmale.setSelected(false);
-//            }
-//            Date birthdate;
-//            try {
-//                birthdate = new SimpleDateFormat("yyyy-MM-dd").parse(model.getValueAt(rowIndex, 4).toString());
-//                jDateChooserbirthdate.setDate(birthdate);
-//            } catch (ParseException ex) {
-//                Logger.getLogger(ManageStudent.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
     }//GEN-LAST:event_tablescoreKeyReleased
 
     /**

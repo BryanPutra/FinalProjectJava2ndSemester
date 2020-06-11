@@ -123,12 +123,9 @@ public class Student {
                 // iterating through the contents/rows of the resultset (which is the selected table in the database) 
                 row = new Object[7]; // make a row with 7 columns which we will fill with attributes from the resultset
                 row[0] = rs.getInt(1); 
-                row[1] = rs.getString(2);
-                row[2] = rs.getString(3);
-                row[3] = rs.getString(4);
-                row[4] = rs.getString(5);
-                row[5] = rs.getString(6);
-                row[6] = rs.getString(7);
+                for(int i = 1; i < 7; i++){
+                    row[i] = rs.getString(i + 1);
+                }
                 
                 model.addRow(row); // give the table model a row every iteration
                 

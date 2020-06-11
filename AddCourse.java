@@ -2,16 +2,6 @@
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author Nicholas
- */
 public class AddCourse extends javax.swing.JFrame {
 
     /**
@@ -144,7 +134,11 @@ public class AddCourse extends javax.swing.JFrame {
         // the function checkCourseAlreadyExist in the Course class returns true if the course already exists in the database
         // with the parameter being the given course by the user
         // so if there the course given from the user is new
-        if(!c.checkCourseAlreadyExist(txtcourse.getText())){
+        if(txtcourse.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill the course form");
+        }
+        else{
+            if(!c.checkCourseAlreadyExist(txtcourse.getText())){
             // store the given data from user to variables
             String label = txtcourse.getText();
             int hours = Integer.valueOf(spinnerhours.getValue().toString());
@@ -162,10 +156,13 @@ public class AddCourse extends javax.swing.JFrame {
                 System.out.println(ex.getMessage());
             }
             
+            }
+ 
+            else{
+                JOptionPane.showMessageDialog(null, "Course Already Exists");
+            }
         }
-        else{
-            JOptionPane.showMessageDialog(null, "Course Already Exists");
-        }
+        
         
 
     }//GEN-LAST:event_btnaddActionPerformed
